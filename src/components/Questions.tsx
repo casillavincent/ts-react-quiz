@@ -5,7 +5,7 @@ import { AnswerObject } from "../App";
 type Props = {
    question: string;
    answers: string[];
-   callback: any;
+   callback: (e: React.MouseEvent<HTMLButtonElement>) => void;
    userAnswer: AnswerObject | undefined;
    questionNr: number;
    totalQuestions: number;
@@ -28,15 +28,15 @@ const Questions: React.FC<Props> = ({
          </p>
 
          <p dangerouslySetInnerHTML={{ __html: question }} />
-         <div className="answers">
-            {answers !== undefined &&
-               answers.map((answer) => (
-                  <div key={answer}>
-                     <button disabled={userAnswer ? true : false} onClick={callback}>
-                        <span dangerouslySetInnerHTML={{ __html: answer }} />
-                     </button>
-                  </div>
-               ))}
+         <div>
+            {answers.map((answer) => (
+               <div key={answer}>
+                  <button disabled={userAnswer ? true : false} value={answer} onClick={callback}>
+                     <span dangerouslySetInnerHTML={{ __html: answer }} />
+                     works
+                  </button>
+               </div>
+            ))}
          </div>
       </div>
    );

@@ -19,12 +19,13 @@ export enum Difficulty {
 
 export type QuestionState = Question & { answers: string[] };
 
-export const fetchApiQuestions = async (amount: number, difficulty: Difficulty) => {
-   const response = `https://opentdb.com/api.php?amount=${amount}&category=18&difficulty=${difficulty}&type=multiple`;
-
+export const fetchApiQuestions = async (
+   amount: number,
+   difficulty: Difficulty
+): Promise<QuestionState[]> => {
+   const response = `https://opentdb.com/api.php?amount=${amount}&difficulty=${difficulty}&type=multiple`;
    // 2 Awaits mean it will await the fetch itself and when you convert to JSON
    const data = await (await fetch(response)).json();
-   console.log(data);
    return data.results.map((question: Question) => ({
       ...question,
       answers: shuffleArray([...question.incorrect_answers, question.correct_answer]),

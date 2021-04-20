@@ -3,12 +3,11 @@ import React from "react";
 import { useState } from "react";
 
 // Globals
-import { Difficulty, QuestionState, fetchApiQuestions } from "./API";
+import { fetchApiQuestions } from "./API";
+import { Difficulty, QuestionState } from "./API";
 
 // Components
 import Questions from "./components/Questions";
-
-const TOTAL_QUESTIONS = 10;
 
 export type AnswerObject = {
    question: string;
@@ -16,6 +15,8 @@ export type AnswerObject = {
    correct: boolean;
    correctAnswer: string;
 };
+
+const TOTAL_QUESTIONS = 10;
 
 function App() {
    // Set States
