@@ -6,13 +6,13 @@ import Questions from "./components/Questions";
 import { fetchQuestions } from "./globals/API";
 import { Difficulty, QuestionsState } from "./globals/API";
 
-// Conventional Props
+// Working with conventional props
 const Heading = ({ title }: { title: string }) => <h1>{title}</h1>;
 const Background = ({ children }: { children: ReactNode }): JSX.Element => {
-   return <div className="project-background">{children}</div>;
+   return <p className="project-background">{children}</p>;
 };
 
-// Vars
+// Variables
 const TOTAL_QUESTIONS = 10;
 
 // Types
@@ -35,6 +35,7 @@ function App() {
    const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([]);
    const [score, setScore] = useState(0);
    const [gameOver, setGameOver] = useState(true);
+   const [gameStarted, setGameStarted] = useState(false);
 
    /*
    -----------------------------------
@@ -46,14 +47,13 @@ function App() {
    const startTrivia = async () => {
       setLoading(true);
       setGameOver(false);
-
       const newQuestions = await fetchQuestions(TOTAL_QUESTIONS, Difficulty.EASY);
-
       setQuestions(newQuestions);
       setScore(0);
       setUserAnswers([]);
       setNumber(0);
       setLoading(false);
+      setGameStarted(true);
    };
 
    // Check the answer
@@ -89,6 +89,7 @@ function App() {
       const nextQuestion = number + 1;
       if (nextQuestion === TOTAL_QUESTIONS) {
          setGameOver(true);
+         setGameStarted(false);
       } else {
          setNumber(nextQuestion);
       }
@@ -96,41 +97,51 @@ function App() {
 
    return (
       <div className="App">
-         <Heading title="React Quiz" />
-         <Background>A small project to help me better understand TypeScript and React.</Background>
+         <main className="main-page">
+            <section className="title">
+               {" "}
+               <Heading title="React Quiz" />
+               <Background>
+                  A small project to help me better understand TypeScript and React.
+               </Background>
+            </section>
 
-         <div className="quiz-wrapper" id="quiz-wrapper">
-            {/* Button that starts the quiz */}
+            {/* Quiz Wrapper */}
+            <article className="quiz-wrapper" id="quiz-wrapper">
+               {/* Button that starts the quiz */}
 
-            {/* If its gameover or at the last question it will turn off button */}
-            {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
-               <button className="start-quiz" onClick={startTrivia}>
-                  Start Quiz
-               </button>
-            ) : null}
+               {/* If its gameover or at the last question it will turn off button */}
+               {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
+                  <button className="start-quiz" onClick={startTrivia}>
+                     Start Quiz
+                  </button>
+               ) : null}
 
-            {/* Shows the score if the game isnt over */}
-            {!gameOver ? <p className="score">Score: {score}</p> : null}
-            {loading && <p>Loading Questions ... </p>}
+               {/* Shows the score if the game isnt over */}
+               {!gameOver ? <p className="score">Score: {score}</p> : null}
+               {loading && <p>Loading Questions ... </p>}
 
-            {/* Load Questions Here */}
-            {!loading && !gameOver && (
-               <Questions
-                  question={questions[number].question}
-                  answers={questions[number].answers}
-                  cb={checkAnswer}
-                  userAnswer={userAnswers ? userAnswers[number] : undefined}
-                  questionNr={number + 1}
-                  totalQuestions={TOTAL_QUESTIONS}
-               />
-            )}
+               {/* Load Questions Here */}
+               {!loading && !gameOver && (
+                  <Questions
+                     question={questions[number].question}
+                     answers={questions[number].answers}
+                     cb={checkAnswer}
+                     userAnswer={userAnswers ? userAnswers[number] : undefined}
+                     questionNr={number + 1}
+                     totalQuestions={TOTAL_QUESTIONS}
+                  />
+               )}
 
-            {/* Button for Next Question */}
-            {!gameOver && !loading && userAnswers.length === number + 1}
-            <button className="next-question-toggle" onClick={nextQuestion}>
-               Next Question
-            </button>
-         </div>
+               {/* Button for Next Question */}
+               {!gameOver && !loading && userAnswers.length === number + 1}
+               {gameStarted && (
+                  <button className="next-question-toggle" onClick={nextQuestion}>
+                     Next Question
+                  </button>
+               )}
+            </article>
+         </main>
       </div>
    );
 }
