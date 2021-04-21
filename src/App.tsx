@@ -1,82 +1,33 @@
 import { start } from "node:repl";
-import React from "react";
-import { useState } from "react";
-
-// Globals
-import { fetchApiQuestions } from "./API";
-import { Difficulty, QuestionState } from "./API";
-
-// Components
+import React, { ReactNode, useState, useEffect } from "react";
+import { setConstantValue } from "typescript";
 import Questions from "./components/Questions";
+import { fetchQuestions } from "./globals/API";
 
-export type AnswerObject = {
-   question: string;
-   answer: string;
-   correct: boolean;
-   correctAnswer: string;
+const Heading = ({ title }: { title: string }) => <h1>{title}</h1>;
+const Background = ({ children }: { children: ReactNode }): JSX.Element => {
+   return <div className="project-background">{children}</div>;
 };
 
-const TOTAL_QUESTIONS = 10;
-
 function App() {
-   // Set States
-   const [loading, setLoading] = useState(false);
-   const [questions, setQuestions] = useState<QuestionState[]>([]);
-   const [number, setNumber] = useState(0);
-   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([]);
-   const [score, setScore] = useState(0);
-   const [gameOver, setGameOver] = useState(true);
-
-   const startTrivia = async () => {
-      setLoading(true);
-      setGameOver(false);
-
-      const newQuestions = await fetchApiQuestions(TOTAL_QUESTIONS, Difficulty.EASY);
-
-      setQuestions(newQuestions);
-      setScore(0);
-      setUserAnswers([]);
-      setNumber(0);
-      setLoading(false);
-      console.log(newQuestions);
-   };
-
-   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {};
-
-   const nextQuestion = () => {};
+   const [questions, setQuestions] = useState<any>(null);
+   const [triviaStart, setTriviaStart] = React.useState<boolean>(false);
 
    return (
       <div className="App">
-         <h1>React Quiz</h1>
-         {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
-            <button className="start" onClick={startTrivia}>
-               Start
-            </button>
-         ) : null}
+         <Heading title="React Quiz" />
+         <Background>A small project to help me better understand TypeScript and React.</Background>
 
-         {!gameOver ? <p className="score">Score:</p> : null}
-         {loading && <p className="loading-questions">Loading Questions</p>}
-
-         {/* Question card component below */}
-         {!loading && !gameOver && (
-            <Questions
-               questionNr={number + 1}
-               totalQuestions={TOTAL_QUESTIONS}
-               question={questions[number].question}
-               answers={questions[number].answers}
-               userAnswer={userAnswers ? userAnswers[number] : undefined}
-               callback={checkAnswer}
-            />
-         )}
-
-         {!gameOver &&
-         !loading &&
-         userAnswers.length === number + 1 &&
-         number !== TOTAL_QUESTIONS - 1 ? (
-            <button className="next" onClick={nextQuestion}>
-               Next Question
-            </button>
-         ) : null}
+         {/* Load Questions Here */}
+         <button
+            onClick={() => {
+               setTriviaStart(!triviaStart);
+               setQuestions(fetchQuestions(10));
+            }}
+         >
+            Show Questions
+         </button>
+         {triviaStart && <Questions questions={questions} />}
       </div>
    );
 }
