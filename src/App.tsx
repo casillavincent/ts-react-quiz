@@ -99,7 +99,6 @@ function App() {
       <div className="App">
          <main className="main-page">
             <section className="title">
-               {" "}
                <Heading title="React Quiz" />
                <Background>
                   A small project to help me better understand TypeScript and React.
