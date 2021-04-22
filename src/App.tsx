@@ -1,6 +1,8 @@
+// React Imports
 import { start } from "node:repl";
 import React, { ReactNode, useState } from "react";
 import Questions from "./components/Questions";
+import { FiCpu } from "react-icons/fi";
 
 // Globals
 import { fetchQuestions } from "./globals/API";
@@ -13,7 +15,7 @@ const Background = ({ children }: { children: ReactNode }): JSX.Element => {
 };
 
 // Variables
-const TOTAL_QUESTIONS = 10;
+const TOTAL_QUESTIONS = 10; // change this to generate amount of questions to use
 
 // Types
 export type AnswerObject = {
@@ -99,26 +101,31 @@ function App() {
       <div className="App">
          <main className="main-page">
             <section className="title">
-               <Heading title="React Quiz" />
+               <FiCpu size="5em" />
+               <Heading title="React + TypeScript Trivia" />
                <Background>
-                  A small project to help me better understand TypeScript and React.
+                  A small project to help me understand TypeScript and React. This project uses the
+                  Open Trivia DB API to generate questions.
                </Background>
             </section>
 
+            {/* Button that starts the quiz */}
+            {/* If its gameover or at the last question it will turn off button */}
+            {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
+               <button className="start-quiz" onClick={startTrivia}>
+                  Start Quiz
+               </button>
+            ) : null}
+
             {/* Quiz Wrapper */}
             <article className="quiz-wrapper" id="quiz-wrapper">
-               {/* Button that starts the quiz */}
-
-               {/* If its gameover or at the last question it will turn off button */}
-               {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
-                  <button className="start-quiz" onClick={startTrivia}>
-                     Start Quiz
-                  </button>
-               ) : null}
-
                {/* Shows the score if the game isnt over */}
-               {!gameOver ? <p className="score">Score: {score}</p> : null}
-               {loading && <p>Loading Questions ... </p>}
+               {!gameOver ? (
+                  <p className="score">
+                     Score: <span>{score}</span>
+                  </p>
+               ) : null}
+               {loading && <p className="is-loading-indicator">Loading Questions ... </p>}
 
                {/* Load Questions Here */}
                {!loading && !gameOver && (

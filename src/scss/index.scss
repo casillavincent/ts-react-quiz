@@ -1,6 +1,8 @@
 // Imports
-@import url("https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&family=Overpass:wght@100;200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Raleway:wght@300&display=swap");
 
+// Variables
+$accent: #07beb8;
 html {
    * {
       padding: 0px;
@@ -14,19 +16,22 @@ body {
    width: 100%;
    height: 100vh;
    * {
-      font-family: "Overpass", sans-serif;
-      font-size: 1em;
+      font-family: "Open Sans", sans-serif;
    }
 }
 
+p {
+   font-size: 1em;
+   text-align: center;
+}
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-   font-family: "Chivo", sans-serif;
-   font-size: 2.5em;
+   font-family: "Raleway", sans-serif;
+   font-size: 3em;
 }
 
 // Page Title
@@ -39,7 +44,14 @@ h6 {
    * {
       color: white;
    }
+   p {
+      margin-top: 15px;
+   }
+   svg {
+      margin: 25px;
+   }
 }
+
 main.main-page {
    max-width: 600px;
    margin: auto;
@@ -53,9 +65,116 @@ main.main-page {
 .main-page .quiz-wrapper {
    margin: 25px;
    width: 100%;
-   height: 50vh;
+   height: auto;
    display: flex;
    flex-direction: column;
    align-items: center;
    justify-content: center;
+}
+
+button.start-quiz {
+   border: 1px solid white;
+   padding: 20px 50px;
+   background: transparent;
+   color: white;
+   font-size: 1em;
+   border-radius: 7px;
+   transition: all 0.3s ease-in-out;
+   margin-top: 25px;
+   &:hover {
+      background: $accent;
+      border-style: none;
+      cursor: pointer;
+   }
+}
+
+// Score Indicator
+p.score {
+   background: $accent;
+   padding: 10px 20px;
+   border-radius: 10px;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   span {
+      font-size: 1.75em;
+      margin-left: 10px;
+   }
+}
+
+// Question Card Styles
+.rendered-question-card {
+   border: 1px solid white;
+   border-radius: 7px;
+   margin: 25px 0px;
+   padding: 30px;
+   * {
+      color: white;
+   }
+   button p {
+      color: white;
+      font-size: 1.25em;
+   }
+
+   // Answers List
+   div.answers {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      justify-items: center;
+      align-items: center;
+      grid-gap: 20px;
+      margin-top: 20px;
+   }
+
+   .answers .answer-item button {
+      width: 250px;
+      height: 75px;
+      border-radius: 10px;
+      background: transparent;
+      border: 1px solid white;
+      transition: all 0.3s ease-in-out;
+      &:hover {
+         background: $accent;
+         cursor: pointer;
+         border-style: none;
+      }
+   }
+
+   .answers .answer-item button:disabled,
+   .answers .answer-item button[disabled] {
+      opacity: 0.6;
+      &:hover {
+         background: none;
+         border: 1px solid white;
+         cursor: not-allowed;
+      }
+   }
+
+   p.question-number {
+      font-size: 0.9em;
+      margin-bottom: 25px;
+   }
+}
+
+// Next Question
+.next-question-toggle {
+   padding: 20px 50px;
+   border-radius: 7px;
+   border: 1px solid white;
+   background: none;
+   color: white;
+   transition: all 0.3s ease-in-out;
+
+   &:hover {
+      background: $accent;
+      border-style: none;
+      cursor: pointer;
+   }
+}
+
+.is-loading-indicator {
+   color: white;
+   font-size: 1.5em;
+   padding: 20px;
 }

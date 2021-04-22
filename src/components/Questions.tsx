@@ -14,7 +14,7 @@ export type Props = {
 // Use Function Components
 const Questions = ({ question, answers, cb, userAnswer, questionNr, totalQuestions }: Props) => {
    return (
-      <div>
+      <div className="rendered-question-card">
          {/* Question number and total indicator */}
          <p className="question-number">
             Question: {questionNr} / {totalQuestions}
@@ -26,7 +26,7 @@ const Questions = ({ question, answers, cb, userAnswer, questionNr, totalQuestio
          {/* List of Answers here */}
          <div className="answers">
             {answers.map((answer) => (
-               <div key={answer}>
+               <div key={answer} className="answer-item">
                   {/* Disabled is a boolean attribute for button;
                   A disabled button is unusable and un-clickable */}
 

@@ -19,7 +19,7 @@ export enum Difficulty {
 }
 
 export const fetchQuestions = async (amount: number, difficulty: Difficulty) => {
-   const data = `https://opentdb.com/api.php?amount=${amount}&category=18&difficulty=${difficulty}&type=multiple`;
+   const data = `https://opentdb.com/api.php?amount=${amount}&category=9&difficulty=${difficulty}&type=multiple`;
 
    // Awaits for the JSON then awaits for the fetch itself - why there's two awaits
    const response = await (await fetch(data)).json();
