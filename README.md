@@ -1,6 +1,6 @@
 # TypeScript + ReactJS Quiz
 
-### Try it out [here]('ts-react-trivia.netlify.app')
+### Try it out [here](https://ts-react-trivia.netlify.app/)
 <img src="https://user-images.githubusercontent.com/73447863/115789442-04650900-a37a-11eb-8bb7-fd51e6405d84.png" alt="Project Screenshots" width="750" markdown="1" />
 <img src="https://user-images.githubusercontent.com/73447863/115789449-05963600-a37a-11eb-8cca-e10b8be466dc.png" alt="Project Screenshots" width="750" markdown="1" />
 <img src="https://user-images.githubusercontent.com/73447863/115789452-05963600-a37a-11eb-8a0f-6dbb45117af6.png" alt="Project Screenshots" width="750" markdown="1" />
